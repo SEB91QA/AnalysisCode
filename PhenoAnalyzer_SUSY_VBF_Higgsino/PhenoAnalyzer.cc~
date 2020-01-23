@@ -91,13 +91,13 @@ int main(int argc, char *argv[])
 
   // boolean mask to avoid over computation
   vector<bool> vbfCutsArr;                                               //Con el ojo cuadrado
-  vector<bool> cutsArr;                                                  
+  vector<bool> cutsArr;
   vector<bool> vbfCutsArr_nocuts;
   vector<bool> cutsArr_nocuts;
 
-  for(int i = 0 ; (unsigned) i < treeReader->GetEntries(); i ++)    
+  for(int i = 0 ; (unsigned) i < treeReader->GetEntries(); i ++)
   {
-    vbfCutsArr.push_back(true);                                          //Agrega un elemento al vector. Con qué fin?
+    vbfCutsArr.push_back(true);
     cutsArr.push_back(true);
     vbfCutsArr_nocuts.push_back(true);
     cutsArr_nocuts.push_back(true);
@@ -106,19 +106,19 @@ int main(int argc, char *argv[])
   int nEvents ;
 
   // write number of events to csv
-  nEvents = (int) treeReader->GetEntries();        
-  writeCsv(nEvents, string(argv[1]),"C0");                              //La función se evalua con estas variables
+  nEvents = (int) treeReader->GetEntries();
+  writeCsv(nEvents, string(argv[1]),"C0");
 
   // open output file
-  HistoOutputFile->cd();                                                //Saca el achivo
+  HistoOutputFile->cd();
 
   nLeptonsDirectory->cd();
-  cout << "nLeptons" << endl;                                           
-  drawLeptonCount(treeReader, ns, branchDict, vbfCutsArr, cutsArr,noFilter);   //Con el ojo cuadrado
+  cout << "nLeptons" << endl;
+  drawLeptonCount(treeReader, ns, branchDict, vbfCutsArr, cutsArr,noFilter);
   nEvents = ptEtaPhiMjjMt(treeReader, branchDict, vbfCutsArr, cutsArr,noFilter);
   cout << "nLeptons done." << endl;
 
-  writeCsv(nEvents, string(argv[1]),"nLeptons");                         //Vuelve y se evaluan las funciones
+  writeCsv(nEvents, string(argv[1]),"nLeptons");
 
   // -----------------------------------------------------------------------------------------
   // need a different boolean array to avoid filtering problems
