@@ -23,7 +23,7 @@ void writeCsv(int count, string path, string cut){                //Se crea la f
   outfile << path<<","<<cut<<","<<count<<"\n"; 
 }
 
-int main(int argc, char *argv[])                                 
+int main(int argc, char *argv[]){                                 
 
   cout << "Starting phenoanalyzer..." << endl;
 
