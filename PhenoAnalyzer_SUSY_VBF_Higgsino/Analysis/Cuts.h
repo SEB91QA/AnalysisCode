@@ -127,17 +127,20 @@ bool met(ExRootTreeReader *treeReader,
 {
   // met>150
   
-  
+  bool MB = true;  
   treeReader->ReadEntry(entry);
-  bool MetBool = true;
 
-  bool metBool = met(treeReader, branchDict, entry) > 230.0;
-
-  cutsArr[entry] = metBool;
-  return metBool;
-  
-
-   
+     if(cutsArr[entry]){
+       bool metBool = met(treeReader, branchDict, entry) > 230.0;
+      if(metBool){
+           MB = true; 
+                 }
+      else{
+           MB = false;
+          }
+    }     
+   cutsArr[entry] = MB;
+   return MB;
 }
 //---------------------------------------------------------------------------
 bool bjets(ExRootTreeReader *treeReader,
