@@ -1,4 +1,4 @@
-/*                             __
+/*                             __¬
                            .--()¬∞'.'
  Author: Nathalia Cardona '|, . ,'
                            !_-(_\
@@ -14,7 +14,7 @@
 #include <vector>
 #include <set>
 // #include "./VBF_Cuts.h"
-
+//-------------------------------------------------------------------------------------------------------------
 int elecOverlap(ExRootTreeReader *treeReader,
                 map<string, TClonesArray *> branchDict,
                 Jet *jet)
@@ -45,7 +45,7 @@ int elecOverlap(ExRootTreeReader *treeReader,
   }
   return ans;
 }
-
+//-------------------------------------------------------------------------------------------------------------
 int muonOverlap(ExRootTreeReader *treeReader,
                 map<string, TClonesArray *> branchDict,
                 Jet *jet)
@@ -76,7 +76,7 @@ int muonOverlap(ExRootTreeReader *treeReader,
   }
   return ans;
 }
-
+//-----------------------------------------------------------------------------------------------------------------------
 void fillHisto(TH1 *histo, float value)
 {
   if (value > 0)
@@ -84,16 +84,14 @@ void fillHisto(TH1 *histo, float value)
     histo->Fill(value);
   }
 }
-
-map<string, TH1 *> nLeptonAnalysis(ExRootTreeReader *treeReader,
+//--------------------------------------------------------------------------------------------------------------------------
+map<string, TH1 *> nLeptonAnalysis(ExRootTreeReader *treeReader,                       //Cambiamos el n√mero de argumentos.
                                    int PTUpperCut,
                                    map<string, TClonesArray *> branchDict,
-                                   vector<bool> &vbfCutsArr,
                                    vector<bool> &cutsArr,
                                    bool (*filter)(ExRootTreeReader *,
                                                   map<string, TClonesArray *>,
                                                   int,
-                                                  vector<bool>&,
                                                   vector<bool>&))
 {
 
@@ -139,7 +137,7 @@ map<string, TH1 *> nLeptonAnalysis(ExRootTreeReader *treeReader,
     //    // cout << "\r" << (100.0 * entry) / numberOfEntries << "%";
     treeReader->ReadEntry(entry);
 
-    if (filter(treeReader, branchDict, entry, vbfCutsArr, cutsArr))
+    if (filter(treeReader, branchDict, entry, cutsArr))                         //Cambiamosel n√mero de argumentos
     {
 
       // electrons
@@ -211,20 +209,19 @@ map<string, TH1 *> nLeptonAnalysis(ExRootTreeReader *treeReader,
   //  cout << "nLepton Analysis with n = " << PTUpperCut << " done." << endl;
   return histograms;
 }
+//--------------------------------------------------------------------------------------------------------------------------------
 bool inSet(int val, set<int> theSet)
 {
   return theSet.count(val) > 0;
 }
-
-int ptEtaPhiMjjMt(
+//-----------------------------------------------------------------------------------------------------------------------------------------
+int ptEtaPhiMjjMt(                                //Aqu√≠ cambiamos el n√mero de argumentos
     ExRootTreeReader *treeReader,
     map<string, TClonesArray *> branchDict,
-    vector<bool> vbfCutsArr,
     vector<bool> cutsArr,
     bool (*filter)(ExRootTreeReader *,
                    map<string, TClonesArray *>,
                    int,
-                   vector<bool>&,
                    vector<bool>&))
 {
 
@@ -292,7 +289,7 @@ int ptEtaPhiMjjMt(
 
     treeReader->ReadEntry(entry);
 
-    if (filter(treeReader, branchDict, entry, vbfCutsArr, cutsArr))
+    if (filter(treeReader, branchDict, entry, cutsArr))                              //Se cambia el n√∫mero de argumentos
     {
       numEvents+=1;
 
@@ -447,7 +444,7 @@ int ptEtaPhiMjjMt(
   return numEvents;
 
 }
-
+//-------------------------------------------------------------------------------------------------------------------------
 void drawMultiHistos(TObjArray histos, string title, string particleType)
 {
 
@@ -462,17 +459,16 @@ void drawMultiHistos(TObjArray histos, string title, string particleType)
 
   cl->Write();
 }
-
-void drawLeptonCount(ExRootTreeReader *treeReader,
+//-------------------------------------------------------------------------------------------------------------------------------
+void drawLeptonCount(ExRootTreeReader *treeReader,                               //Cambiamos el n√∫mero de argumentos
                      vector<int> ns,
                      map<string, TClonesArray *> branchDict,
-                     vector<bool> &vbfCutsArr,
                      vector<bool> &cutsArr,
                      bool (*filter)(ExRootTreeReader *,
                                     map<string, TClonesArray *>,
                                     int,
-                                    vector<bool>&,
                                     vector<bool>&))
+                                    
 {
   //  cout << "draw lepton count" << endl;
   vector<string> particleTypes = {"lepton", "electron", "muon", "tau"};
@@ -485,7 +481,7 @@ void drawLeptonCount(ExRootTreeReader *treeReader,
 
   for (int i = 0; (unsigned)i < ns.size(); i++)
   {
-    map<string, TH1 *> histoOutput = nLeptonAnalysis(treeReader, ns[i], branchDict, vbfCutsArr, cutsArr, filter);
+    map<string, TH1 *> histoOutput = nLeptonAnalysis(treeReader, ns[i], branchDict, cutsArr, filter);       //Cambiamos el n√∫mero de argumentos
 
     for (int j = 0; (unsigned)j < particleTypes.size(); j++)
     {
@@ -499,3 +495,5 @@ void drawLeptonCount(ExRootTreeReader *treeReader,
   //   drawMultiHistos(histos[particleTypes[i]], "#" + particleTypes[i] + "s", particleTypes[i]);
   // }
 }
+
+//-------------------------------------------------------------------------------------------------------------------------------------------------------
